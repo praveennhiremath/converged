@@ -32,11 +32,11 @@
             "filename": "../../detect-communities/detect-communities.md"
         },
         {
-            "title": "Lab 6: Adjust constraints and reform the communities",
-            "filename": "../../analyze-results/analyze-results-and-adjust-constraints.md"
+            "title": "Lab 6: Run community detection on medical records",
+            "filename": "../../detect-communities/detect-communities-med-records.md"
         },
         {
-            "title": "Lab 7: Analysis of communities on the smaller graph",
+            "title": "Lab 7: Extract a smaller graph to understand the detected communities better",
             "filename": "../../extract-smaller-graph/create-small-graph.md"
         },
         {

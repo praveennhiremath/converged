@@ -17,7 +17,7 @@ This lab assumes you have the following:
 - An Oracle account
 - This lab requires an Autonomous Database - Shared Infrastructure or Autonomous Transaction Processing - Shared Infrastructure account.
 
-## Task 3: Choose the clusters from the result of Infomap from the main graph
+## Task 1: Choose the clusters from the result of Infomap from the main graph
 
 These are a few of the clusters which formed after running community detection on the main graph we have created in Lab 4. We take the nodes from these clusters and the connected edges to these nodes and dump the data to newly created tables.
 
@@ -47,7 +47,7 @@ These are a few of the clusters which formed after running community detection o
     </copy>
     ```
 
-## Task 4: Execute the SQL queries to get all the connected nodes for the selected clusters
+## Task 2: Execute the SQL queries to get all the connected nodes for the selected clusters
 
 Go to SQL developer and execute the below queries using `TKDRADATA` user.
 
@@ -73,7 +73,7 @@ Go to SQL developer and execute the below queries using `TKDRADATA` user.
     </copy>
     ```
 
-## Task 5: Create new tables for the extracted data
+## Task 3: Create new tables for the extracted data
 
 1. Create new table `NODES_259_NEW` and replace the `#{TABLES-INCLUDING-CONNECTED-NODES}` copied in previous step(Task 4, Step 2). Populate the records of the connected nodes by running the following SQL.
 
@@ -109,7 +109,7 @@ Once this has been completed, you are ready to **proceed to the next lab**.
 
 4. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
 
-## Task 6: Alternative approach for creation of smaller graphs
+## Task 4: Alternative approach for creation of smaller graphs
 
 This task is not required if you have followed through with Task 1 to Task 5.
  
