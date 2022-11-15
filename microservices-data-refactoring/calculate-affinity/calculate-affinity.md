@@ -59,22 +59,7 @@ In this task, we will create a set of metadata tables that we will use to store 
 
     >**Note:** This code is provided in the file `create-graph-tables.sql`.
 	
-2. Add the constraints for the newly created tables, where TABLE1 and TABLE2 of EDGES table are foreign keys referencing the TABLE_NAME column of the NODES table.
-	```text
-    <copy>
-	ALTER TABLE NODES ADD PRIMARY KEY (TABLE_NAME);
-
-	ALTER TABLE EDGES ADD TABLE_MAP_ID NUMBER;
-	UPDATE EDGES SET TABLE_MAP_ID = ROWNUM;
-	COMMIT;
-
-	ALTER TABLE EDGES ADD PRIMARY KEY (TABLE_MAP_ID);
-	ALTER TABLE EDGES MODIFY TABLE1 REFERENCES NODES (TABLE_NAME);
-	ALTER TABLE EDGES MODIFY TABLE2 REFERENCES NODES (TABLE_NAME);
-	COMMIT;
-	</copy>```
-
-3. In this step, we will populate the `NODES` table, which will become the vertices in our graph. Execute the following commands to populate the table:
+2. In this step, we will populate the `NODES` table, which will become the vertices in our graph. Execute the following commands to populate the table:
 
     ```text
     <copy>truncate table nodes;
@@ -107,7 +92,7 @@ In this task, we will create a set of metadata tables that we will use to store 
 
     >**Note:** This code is provided in the file `load-graph-tables.sql`.
 
-4. We will also create a helper view that we will use in the affinity calculation. Execute the following command to create the view:
+3. We will also create a helper view that we will use in the affinity calculation. Execute the following command to create the view:
 
     ```text
     <copy>create view tableset_sql as 
@@ -300,6 +285,22 @@ In this task, we will create a set of metadata tables that we will use to store 
     ```text
     <copy>select * from edges where table1 = 'DRA_1';</copy>
     ```
+
+3. Add the constraints for the newly created tables, where TABLE1 and TABLE2 of EDGES table are foreign keys referencing the TABLE_NAME column of the NODES table.
+	```text
+    <copy>
+	ALTER TABLE NODES ADD PRIMARY KEY (TABLE_NAME);
+
+	ALTER TABLE EDGES ADD TABLE_MAP_ID NUMBER;
+	UPDATE EDGES SET TABLE_MAP_ID = ROWNUM;
+	COMMIT;
+
+	ALTER TABLE EDGES ADD PRIMARY KEY (TABLE_MAP_ID);
+	ALTER TABLE EDGES MODIFY TABLE1 REFERENCES NODES (TABLE_NAME);
+	ALTER TABLE EDGES MODIFY TABLE2 REFERENCES NODES (TABLE_NAME);
+	COMMIT;
+	</copy>```
+
 
 If you followed instructions from Task 1 and Task 2, then skip Task 3 and proceed with Lab 4.
 

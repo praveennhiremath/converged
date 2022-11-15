@@ -28,16 +28,16 @@
             "filename": "../../construct-graph/construct-graph.md"
         },
 		{
-            "title": "Lab 5: Run community detection and extract a smaller graph",
-            "filename": "../../extract-smaller-graph/extract-smaller-graph.md"
-        },
-        {
-            "title": "Lab 6: Analysis of communities on the smaller graph",
+            "title": "Lab 5: Run community detection",
             "filename": "../../detect-communities/detect-communities.md"
         },
         {
-            "title": "Lab 7: Adjust constraints and reform the communities",
+            "title": "Lab 6: Adjust constraints and reform the communities",
             "filename": "../../analyze-results/analyze-results-and-adjust-constraints.md"
+        },
+        {
+            "title": "Lab 7: Analysis of communities on the smaller graph",
+            "filename": "../../extract-smaller-graph/create-small-graph.md"
         },
         {
             "title": "Need Help?",

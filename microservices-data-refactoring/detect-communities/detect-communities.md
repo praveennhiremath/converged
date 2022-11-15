@@ -17,6 +17,7 @@ In this lab, you will:
 
 This lab assumes you have the following:
 
+* You are running on Java 10+ in OCI Console. 
 * All previous labs were completed successfully.
 
 ## Task 1: Change the graph properties
@@ -50,9 +51,148 @@ This lab assumes you have the following:
 
     ```
     Save and exit.
+	
 ## Task 2: Compile and Run the Community Detection
 
 Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, which is created in Lab 3, or any data which you loaded through SQL Tuning Sets.
+
+1. Compile the maven project
+
+    ```text
+   <copy>
+    mvn compile
+   </copy>
+   ```
+   
+2. Execute the project to see the identified clusters using the Infomap Algorithm
+
+    ```text
+   <copy>
+   mvn exec:java -Dexec.mainClass=com.oracle.ms.app.InfomapGraphClient -Dexec.args="5"
+   </copy>
+   ```
+
+   Where
+   * com.oracle.ms.app.InfomapGraphClient - The main class which loads the graph and runs the Infomap to identify the Clusters.
+   * 5 is MaxNumberOfIterations for Infomap Algorithm. You can change it to any positive integer.
+
+   Output
+
+   Job Details:
+    ```text
+   name=Environment Creation - 18 GBstype= ENVIRONMENT_CREATION created_by= ADMIN
+   Graph : PgxGraph[name=MED_REC_PG_OBJ_259_G, N=259, E=972, created=1664544333468]
+   ```
+
+    The table names with the same community Ids formed the clusters below.
+		
+	+------------------------+
+	| Community | TABLE_NAME |
+	+------------------------+
+	| 0         | DRA_72     |
+	| 0         | DRA_76     |
+	| 0         | DRA_67     |
+	| 0         | DRA_63     |
+	| 0         | DRA_77     |
+	| 0         | DRA_58     |
+	| 0         | DRA_61     |
+	| 0         | DRA_71     |
+	| 0         | DRA_75     |
+	| 0         | DRA_70     |
+	| 0         | DRA_69     |
+	| 0         | DRA_57     |
+	| 0         | DRA_74     |
+	| 0         | DRA_66     |
+	| 0         | DRA_59     |
+	| 0         | DRA_62     |
+	| 0         | DRA_73     |
+	| 0         | DRA_64     |
+	| 0         | DRA_68     |
+	| 0         | DRA_65     |
+	| 0         | DRA_60     |
+	| 0         | DRA_78     |
+	| 1         | DRA_34     |
+	| 1         | DRA_35     |
+	| 1         | DRA_32     |
+	| 1         | DRA_28     |
+	| 1         | DRA_19     |
+	| 1         | DRA_21     |
+	| 1         | DRA_22     |
+	| 1         | DRA_25     |
+	| 1         | DRA_27     |
+	| 1         | DRA_30     |
+	| 1         | DRA_20     |
+	| 1         | DRA_24     |
+	| 1         | DRA_29     |
+	| 1         | DRA_26     |
+	| 1         | DRA_31     |
+	| 1         | DRA_33     |
+	| 1         | DRA_36     |
+	| 1         | DRA_23     |
+	| 1         | DRA_18     |
+	| 2         | DRA_84     |
+	| 2         | DRA_89     |
+	| 2         | DRA_94     |
+	| 2         | DRA_93     |
+	| 2         | DRA_96     |
+	| 2         | DRA_99     |
+	| 2         | DRA_90     |
+	| 2         | DRA_80     |
+	| 2         | DRA_83     |
+	| 2         | DRA_100    |
+	| 2         | DRA_86     |
+	| 2         | DRA_97     |
+	| 2         | DRA_92     |
+	| 2         | DRA_98     |
+	| 2         | DRA_87     |
+	| 2         | DRA_95     |
+	| 2         | DRA_81     |
+	| 2         | DRA_85     |
+	| 2         | DRA_91     |
+	| 2         | DRA_88     |
+	| 2         | DRA_82     |
+	| 3         | DRA_2      |
+	| 3         | DRA_7      |
+	| 3         | DRA_3      |
+	| 3         | DRA_10     |
+	| 3         | DRA_6      |
+	| 3         | DRA_16     |
+	| 3         | DRA_11     |
+	| 3         | DRA_9      |
+	| 3         | DRA_13     |
+	| 3         | DRA_15     |
+	| 3         | DRA_1      |
+	| 3         | DRA_8      |
+	| 3         | DRA_5      |
+	| 3         | DRA_17     |
+	| 3         | DRA_4      |
+	| 3         | DRA_12     |
+	| 3         | DRA_14     |
+	| 4         | DRA_48     |
+	| 4         | DRA_42     |
+	| 4         | DRA_44     |
+	| 4         | DRA_49     |
+	| 4         | DRA_45     |
+	| 4         | DRA_52     |
+	| 4         | DRA_46     |
+	| 4         | DRA_50     |
+	| 4         | DRA_47     |
+	| 4         | DRA_53     |
+	| 4         | DRA_54     |
+	| 4         | DRA_38     |
+	| 4         | DRA_41     |
+	| 4         | DRA_40     |
+	| 4         | DRA_39     |
+	| 4         | DRA_55     |
+	| 4         | DRA_51     |
+	| 4         | DRA_43     |
+	| 4         | DRA_56     |
+	+------------------------+
+
+## Task 3: Analysis of newly formed clusters	
+	
+	
+## Task 4: Compile and Run the Community Detection on Medical Records
 
 1. Compile the maven project
 
@@ -351,7 +491,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
  ------------------------------------------
 
    ```
-## Task 3: Analysis of newly formed clusters
+## Task 5: Analysis of newly formed clusters of Medical Records
 
 * There are 63 Nodes in the below cluster :
 * Main Table for forming a cluster is PRSNL, where the major number of tables are connected with this table.

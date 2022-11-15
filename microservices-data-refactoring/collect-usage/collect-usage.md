@@ -226,12 +226,14 @@ select* from tkdradata.dra_11, tkdradata.dra_9, tkdradata.dra_12, tkdradata.dra_
 select * from tkdradata.dra_7, tkdradata.dra_2, tkdradata.dra_4;
     /</copy>
     ```
+    
+  **No Rows Selected** is the expected output.
 
 ## Task 5: Load the SQL Tuning Set
 
->**Note:** The commands in this task **must** be run as the `ADMIN` user.  To open an SQL Worksheet for the `ADMIN` user, repeat steps 1 and 2 in Task 1.
+>**Note:** The commands in this task **must** be run as the **`ADMIN`** user.  To open an SQL Worksheet for the `ADMIN` user, repeat steps 1 and 2 in Task 1. Still if you not on `ADMIN` user, logout from current user and login as `ADMIN` user.
 
-1. Being careful to ensure you run this command as the `ADMIN` user, not `TKDRADATA`, load the workload data into the SQL Tuning Set using this command:
+1. Being careful to ensure you run this command as the **`ADMIN`** user, not `TKDRADATA`, load the workload data into the SQL Tuning Set using this command:
 
     ```text
     -- run this as the ADMIN user
