@@ -85,7 +85,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    ```
 
     The table names with the same community Ids formed the clusters below.
-		
+    ```text		
 	+------------------------+
 	| Community | TABLE_NAME |
 	+------------------------+
@@ -188,8 +188,9 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 	| 4         | DRA_43     |
 	| 4         | DRA_56     |
 	+------------------------+
-
-## Task 3: Analysis of newly formed clusters	
+    ```
+	
+## Task 3: Analysis of newly formed clusters
 	
 	
 ## Task 4: Compile and Run the Community Detection on Medical Records
