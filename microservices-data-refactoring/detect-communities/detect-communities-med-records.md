@@ -52,7 +52,7 @@ This lab assumes you have the following:
     ```
     Save and exit.
 	
-## Task 2: Compile and Run the Community Detection
+## Task 2: Compile and Run the Community Detection on medical records
 
 Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, which is created in Lab 3, or any data which you loaded through SQL Tuning Sets.
 
@@ -104,11 +104,10 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
      ```
 
     Here we have shown only for first ten nodes for reference. Similarly, we will have communities detected for all 974 nodes. Detailed analysis is done on the smaller graph in the next lab.
-    ```
 	
-## Task 3: Analysis of newly formed clusters on Medical Records
+## Task 3: Analysis of newly formed clusters on medical records
 
-## Task 4: Adjust constraints and reform the communities
+## Task 4: Adjust constraints and reform the communities of medical records
 
 1. For example, we consider the node named `RAD_REPORT_DETAIL`, want to move from cluster 3 to cluster 2.
 
