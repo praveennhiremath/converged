@@ -28,15 +28,15 @@ Three possible options to proceed are:
 
 ## Task 1: Create Graph Metadata Tables
 
-In this task, we will create a set of metadata tables that we will use to store the information we need to perform community detection in the next lab. We will create one table called `TABLESET_TABLES` that will contain a list of all of the tables that were used in the workload capture and how many times each table was accessed and/or participated in a join. A second table called `TABLE_MAP` will be used to store the affinities between pairs of tables. Later, when we create a graph, the first table will describe the vertices, and the second table will describe the edges.
+In this task, we will create a set of metadata tables that we will use to store the information we need to perform community detection in the next lab. We will create one table called `NODES` that will contain a list of all of the tables that were used in the workload capture and how many times each table was accessed and/or participated in a join. A second table called `EDGES` will be used to store the affinities between pairs of tables. Later, when we create a graph, the first table will describe the vertices, and the second table will describe the edges.
 
 1. Create the graph metadata tables by running the following statements - make sure you run these in your `TKDRADATA` SQL Worksheet (not the `ADMIN` user's worksheet):
 
     ```text
-    <copy>drop table tableset_tables;
-    drop table table_map;
+    <copy>drop table nodes;
+    drop table edges;
 
-    create table tableset_tables 
+    create table nodes 
     ( table_set_name       varchar2(128)
     , schema               varchar2(128)
     , table_name           varchar2(128)
@@ -44,7 +44,7 @@ In this task, we will create a set of metadata tables that we will use to store 
     , total_executions     number(10)
     , tables_joined        number(10));
 
-    create table table_map 
+    create table edges 
     ( table_set_name       varchar2(128)
     , table1               varchar2(128)
     , schema1              varchar2(128)
@@ -58,13 +58,28 @@ In this task, we will create a set of metadata tables that we will use to store 
     ```
 
     >**Note:** This code is provided in the file `create-graph-tables.sql`.
+	
+2. Add the constraints for the newly created tables, where TABLE1 and TABLE2 of EDGES table are foreign keys referencing the TABLE_NAME column of the NODES table.
+	```text
+    <copy>
+	ALTER TABLE NODES ADD PRIMARY KEY (TABLE_NAME);
 
-2. In this step, we will populate the `TABLESET_TABLES` table, which will become the vertices in our graph. Execute the following commands to populate the table:
+	ALTER TABLE EDGES ADD TABLE_MAP_ID NUMBER;
+	UPDATE EDGES SET TABLE_MAP_ID = ROWNUM;
+	COMMIT;
+
+	ALTER TABLE EDGES ADD PRIMARY KEY (TABLE_MAP_ID);
+	ALTER TABLE EDGES MODIFY TABLE1 REFERENCES NODES (TABLE_NAME);
+	ALTER TABLE EDGES MODIFY TABLE2 REFERENCES NODES (TABLE_NAME);
+	COMMIT;
+	</copy>```
+
+3. In this step, we will populate the `NODES` table, which will become the vertices in our graph. Execute the following commands to populate the table:
 
     ```text
-    <copy>truncate table tableset_tables;
+    <copy>truncate table nodes;
 
-    insert into tableset_tables (table_set_name, schema, table_name, total_sql, total_executions) 
+    insert into nodes (table_set_name, schema, table_name, total_sql, total_executions) 
     select table_set_name, table_owner, table_name, count(distinct sql_id), sum(executions)
     from ( 
         select distinct table_set_name, table_owner, table_name, sql_id, executions 
@@ -92,7 +107,7 @@ In this task, we will create a set of metadata tables that we will use to store 
 
     >**Note:** This code is provided in the file `load-graph-tables.sql`.
 
-3. We will also create a helper view that we will use in the affinity calculation. Execute the following command to create the view:
+4. We will also create a helper view that we will use in the affinity calculation. Execute the following command to create the view:
 
     ```text
     <copy>create view tableset_sql as 
@@ -129,7 +144,7 @@ In this task, we will create a set of metadata tables that we will use to store 
     * Apply weights for joins and executions (50% each) and calculate the total affinity between the tables,
     * Work out how many other tables it was joined to in total.
 
-    After running this procedure, we have data similar to this in the `TABLE_MAP` table (some rows and columns omitted):
+    After running this procedure, we have data similar to this in the `EDGES` table (some rows and columns omitted):
 
     | TABLE1 | TABLE2 |  JOIN_COUNT | JOIN_EXECUTIONS | STATIC_COEFFICIENT | DYNAMIC_COEFFICIENT | TOTAL_AFFINITY 
     | --- | --- | --- | --- | --- | --- | --- 
@@ -146,14 +161,14 @@ In this task, we will create a set of metadata tables that we will use to store 
     ```text
     <copy>create or replace procedure compute_affinity_tkdra as
     cursor c is
-    select table_name, schema from tableset_tables;
+    select table_name, schema from nodes;
     tblnm varchar2(128);
     ins_sql varchar2(4000);
     upd_sql varchar2(4000);
     begin
         for r in c loop
             ins_sql:= q'{
-                insert into tkdradata.table_map 
+                insert into tkdradata.edges 
                 ( table_set_name
                 , table1
                 , schema1
@@ -181,11 +196,11 @@ In this task, we will create a set of metadata tables that we will use to store 
                         v2.tbl1, 
                         v2.tbl2, 
                         (select sum(total_sql) 
-                            from tableset_tables 
+                            from nodes 
                             where table_name=v2.tbl1 
                             or table_name=v2.tbl2 ) all_sql,
                         (select sum(total_executions) 
-                            from tableset_tables 
+                            from nodes 
                             where table_name=v2.tbl1 
                             or table_name=v2.tbl2 ) all_executions,
                         v2.join_count, 
@@ -234,7 +249,7 @@ In this task, we will create a set of metadata tables that we will use to store 
             execute immediate ins_sql;
 
             upd_sql:= q'{
-                update tkdradata.tableset_tables 
+                update tkdradata.nodes 
                 set tables_joined=(select count(distinct table_name) 
                 from (
                     select 
@@ -283,7 +298,7 @@ In this task, we will create a set of metadata tables that we will use to store 
     This may take a few minutes to complete. Once it is done, we can see the output in our two graph metadata tables, for example:
 
     ```text
-    <copy>select * from table_map where table1 = 'DRA_1';</copy>
+    <copy>select * from edges where table1 = 'DRA_1';</copy>
     ```
 
 If you followed instructions from Task 1 and Task 2, then skip Task 3 and proceed with Lab 4.
@@ -333,8 +348,7 @@ Skip Task 1, Task 2 and Run the Task 3 instructions if you don't have the STS/do
     ```
 
 
-6. Adding the constraints for the newly created data. Where TABLE1 and TABLE2 Columns of the EDGES table are foreign keys referencing the TABLE_NAME column of the NODES table
-  
+6. Add the constraints for the newly created tables, where TABLE1 and TABLE2 of EDGES table are foreign keys referencing the TABLE_NAME column of the NODES table.
     ```text
     <copy>
     ALTER TABLE NODES ADD PRIMARY KEY (TABLE_NAME);
