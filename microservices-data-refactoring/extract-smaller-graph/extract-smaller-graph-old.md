@@ -1,23 +1,139 @@
-# Extract a smaller graph from main graph and Run Community Detection
+# Detect communities on the main graph and extract a smaller graph
 
 ## Introduction
 
-This lab is optional. We should be doing this lab only if we have have uploaded the medical records in Lab 3, Task 3. In this lab, we consider the few clusters which are identified when you run the Lab 6 using community detection. We further create the tables with nodes and edges with this newly extarcted data for further analysis to identify clusters using the Infomap algorithm. The use of a small graph helps us understand the detected communities better.
+In this lab, we will run the community detection algorithm on the main graph and identifies the clusters. The smaller graph is extracted using these clusters by choosing only a few clusters to shorten the data. We create the tables with nodes and edges only for these data for further analysis to identify clusters using the Infomap algorithm. The use of a small graph helps us understand the communities detected.
 
 Estimated Time: 30 minutes
 
 ### Objectives
-- Extract the smaller graph from the main graph as the analysis will be easier and easy to understand.
+- Run the community detection algorithm to detect communities.
+- Extract the smaller graph from the original one as the analysis will be easier and easy to understand.
+- Create the CSV files for Nodes and Edges for the smaller graphs.
 
 ### Prerequisites
 
 This lab assumes you have the following:
-- Lab 1 to Lab 4, and Lab 6 should be completed successfully.
+- An Oracle account
+- This lab requires an Autonomous Database - Shared Infrastructure or Autonomous Transaction Processing - Shared Infrastructure account.
 
+## Task 1: Navigate to the DRAGraphClient project folder and change the database and graph properties
 
-## Task 1: Choose the clusters from the result of Infomap from the main graph
+Now go back to the cloud shell.
 
-These are a few of the clusters which formed after running community detection on the main graph we have created in Lab 6. We take the nodes from these clusters and the connected edges to these nodes and dump the data to newly created tables.
+1. Set the required environment variables as we did in the setup.
+
+    ```text
+   <copy>
+    export DRA_HOME=${HOME}/microservices-data-refactoring
+   </copy>
+   ```
+
+2. Navigate to the project.
+
+    ```text
+   <copy>
+    cd ${HOME}/microservices-data-refactoring/dra-graph-client
+   </copy>
+   ```
+
+3. Update the src/main/resources/db-config.properties file.
+
+    ```text
+   <copy>
+    vi src/main/resources/db-config.properties
+   </copy>
+   ```
+
+   Update the value for the below properties.
+
+    ```text
+    tenant   - tenant OCID
+    database - Name of the Database
+    username - Username to login into the database
+    password - Password to login into the database
+    endpoint - Endpoint for connecting to Autonomous Database instance
+    ```
+
+   Save and exit.
+
+4. Update the src/main/resources/graph-config.properties file.
+
+    ```text
+   <copy>
+    vi src/main/resources/graph-config.properties
+   </copy>
+   ```
+
+    Update the value for the below properties.
+
+    ```text
+    graph_name: Name of the graph created in Graph Studio.
+    vertex_property_column: Column name of Tables
+    edge_property_source_column: Source Column name of the Edge
+    edge_property_destination_column: Destination Column name of the Edge
+    edge_property_weight_column: Column name of Edge weight
+
+    ```
+
+    Save and exit.
+
+## Task 2: Compile and Run the Community Detection
+
+Run the community detection on the main graph created in Lab 3 or any data you loaded through SQL Tuning Sets.
+
+1. Compile the maven project
+
+    ```text
+   <copy>
+    mvn compile
+   </copy>
+   ```
+
+2. Execute the project to see the identified clusters using the Infomap Algorithm
+
+    ```text
+   <copy>
+   mvn exec:java -Dexec.mainClass=com.oracle.ms.app.InfomapGraphClient -Dexec.args="5"
+   </copy>
+   ```
+
+   Where
+   - com.oracle.ms.app.InfomapGraphClient - The main class which loads the graph and runs the Infomap to identify the Clusters.
+   - 5 is MaxNumberOfIterations for Infomap Algorithm. You can change it to any positive integer.
+
+   Output
+
+   Job Details:
+
+    ```text
+   name=Environment Creation - 18 GBstype= ENVIRONMENT_CREATION created_by= ADMIN
+   Graph : PgxGraph[name=MED_REC_PG_OBJ_G, N=974, E=3499, created=1664544333468]
+   ```
+	The output of Infomap will have the Community Ids with the nodes in that community, as shown below
+
+    ```text
+    +----------------------------------------+
+    | Community | TABLE_NAME                 |
+    +----------------------------------------+
+    | 0         | PRSNL_RELTN_ACTIVITY       |
+    | 0         | CLINICAL_SERVICE_RELTN     |
+    | 0         | ENCNTR_PRSNL_RELTN         |
+    | 0         | PE_STATUS_REASON           |
+    | 0         | PCT_CARE_TEAM              |
+    | 0         | PERSON_PERSON_RELTN        |
+    | 0         | PERSON_INFO                |
+    | 0         | DEPT_ORD_STAT_SECURITY     |
+    | 0         | PERSON_PRSNL_RELTN         |
+    | 0         | PRSNL_ORG_RELTN            |
+    ------------------------------------------
+     ```
+
+    Here we have shown only for first ten nodes for reference. Similarly, we will have communities detected for all 974 nodes. Detailed analysis is done on the smaller graph in the next lab.
+
+## Task 3: Choose the clusters from the result of Infomap from the main graph
+
+These are a few of the clusters which formed after running community detection on the main graph we have created in Lab 4. We take the nodes from these clusters and the connected edges to these nodes and dump the data to newly created tables.
 
 1. Below are the tables from the cluster related to the Personal Details of the Patient. Look into the below tables in the output and check all the tables from the Patient related cluster. These tables will have the same community id in the output of Infomap. No action is required here. 
 
@@ -45,7 +161,7 @@ These are a few of the clusters which formed after running community detection o
     </copy>
     ```
 
-## Task 2: Execute the SQL queries to get all the connected nodes for the selected clusters
+## Task 4: Execute the SQL queries to get all the connected nodes for the selected clusters
 
 Go to SQL developer and execute the below queries using `TKDRADATA` user.
 
@@ -71,7 +187,7 @@ Go to SQL developer and execute the below queries using `TKDRADATA` user.
     </copy>
     ```
 
-## Task 3: Create new tables for the extracted data
+## Task 5: Create new tables for the extracted data
 
 1. Create new table `NODES_259_NEW` and replace the `#{TABLES-INCLUDING-CONNECTED-NODES}` copied in previous step(Task 4, Step 2). Populate the records of the connected nodes by running the following SQL.
 
@@ -107,7 +223,7 @@ Once this has been completed, you are ready to **proceed to the next lab**.
 
 4. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
 
-## Task 4: Alternative approach for creation of smaller graphs
+## Task 6: Alternative approach for creation of smaller graphs
 
 This task is not required if you have followed through with Task 1 to Task 5.
  
@@ -116,19 +232,7 @@ This task is not required if you have followed through with Task 1 to Task 5.
 - `microservices-data-refactoring/livelabs/resources/NODES_259_NEW.csv` - Where we have table names.
 - `microservices-data-refactoring/livelabs/resources/EDGES_259_NEW.csv` - Where we have source(TABLE1) and destination(TABLE2) columns with the edge
 
-2. Adding primary and foreign key constraints for the newly created tables `NODES_259_NEW` and `EDGES_259_NEW` by running the following SQL.
-
-    ```text
-    <copy>
-    ALTER TABLE NODES_259_NEW ADD PRIMARY KEY (TABLE_NAME);
-    ALTER TABLE EDGES_259_NEW ADD PRIMARY KEY (TABLE_MAP_ID);
-    ALTER TABLE EDGES_259_NEW MODIFY TABLE1 REFERENCES NODES_259_NEW (TABLE_NAME);
-    ALTER TABLE EDGES_259_NEW MODIFY TABLE2 REFERENCES NODES_259_NEW (TABLE_NAME);
-    commit;
-    </copy>
-    ```
-	
-3. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
+2. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
 
 Once this has been completed, you are ready to **proceed to the next lab**.
 

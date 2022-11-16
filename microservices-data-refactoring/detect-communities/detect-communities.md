@@ -1,8 +1,8 @@
-# Run the community detection algorithm
+# Run the community detection
 
 ## Introduction
 
-In this lab, using the graphs which were created in the previous labs, we applied the community detection algorithm, which identifies the communities within the graphs. The community detection algorithm takes the input graphs and identities strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
+In this lab, using the graphs created in the previous labs, we applied the community detection algorithm, which identifies the communities within the graphs. The community detection algorithm takes the input graphs, identifies strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
 
 Estimated Time: 10 minutes
 
@@ -79,10 +79,9 @@ This lab assumes you have the following:
 
     Save and exit.
 
-
 ## Task 2: Compile and Run the Community Detection
 
-Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, which is created in Lab 3, or any data which you loaded through SQL Tuning Sets.
+Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, created in Lab 3, or any data you loaded through SQL Tuning Sets.
 
 1. Compile the maven project
 
@@ -218,14 +217,14 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 	| 4         | DRA_56     |
 	+------------------------+
     ```
-	
+
 ## Task 3: Adjust constraints and reform the communities
 
-1. For example, we consider the node named `DRA_1`, want to move from cluster 3 to cluster 2.
+1. For example, we consider the node named `DRA_1` and want to move from cluster 3 to cluster 2.
 
-2. Get the nodes of the target cluster to which we want to move node `DRA_1`. And check for the edges from `DRA_1` to nodes of target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
+2. Get the nodes of the target cluster to which we want to move node `DRA_1`. And check for the edges from `DRA_1` to nodes of the target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
 
-    NOTE: We must have an edge from the source node to nodes of the target cluster.
+    NOTE: We must have an edge from the source node to the nodes of the target cluster.
 
     Go to SQL developer and execute the below query.
 
@@ -238,7 +237,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
     </copy>
     ```
 
-3. Run the Infomap algorithm again on the updated data. Follow the same steps from Lab 6, Task 2, and verify whether the required is moved to the intended clusters.
+3. Run the Infomap algorithm again on the updated data. Follow the same steps from Task 2, and verify whether the required node is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
 
 Please **proceed to the next lab** to do so.
 

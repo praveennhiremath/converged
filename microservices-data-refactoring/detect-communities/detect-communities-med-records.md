@@ -1,8 +1,8 @@
-# Run the community detection algorithm on medical records
+# Run community detection on medical records
 
 ## Introduction
 
-In this lab, using the graphs which were created in the previous labs, we applied the community detection algorithm, which identifies the communities within the graphs. The community detection algorithm takes the input graphs and identities strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
+In this lab, we run the community detection algorithm on the graphs created in the previous labs, which identifies the communities within the graphs. The community detection algorithm takes the input graphs, identifies strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
 
 Estimated Time: 10 minutes
 
@@ -81,7 +81,7 @@ This lab assumes you have the following:
 
 ## Task 2: Compile and Run the Community Detection on medical records
 
-Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, which is created in Lab 3, or any data which you loaded through SQL Tuning Sets.
+Here, We are using the smaller graph created in Lab 5. You can run on the main graph, created in Lab 3 or any data you loaded through SQL Tuning Sets.
 
 1. Compile the maven project
 
@@ -112,11 +112,11 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    Graph : PgxGraph[name=MED_REC_PG_OBJ_974_G, N=974, E=3499, created=1664544333468]
    ```
 
-    The output of Infomap will have the Community Ids with the nodes in that community. Each and every node will fall under one or the other cluster. Out of 974 nodes, just for understanding shown the clusters related to Patient Details, Medications and Orders. The complete output can be seen in the file `dra-output-medical-records-974-nodes.txt`
+    The output of Infomap will have the Community Ids with the nodes in that community. Every node will fall under one or the other cluster. Out of 974 nodes, just for the understanding shown, the clusters related to Patient Details, Medications, and Orders. The complete output can be seen in the file `dra-output-medical-records-974-nodes.txt`
 
-	- The nodes in cluster with community 104 is related to Orders.
-	- The nodes in cluster with community 121 is related to Medications.
-	- The nodes in cluster with community 221 is related to Patient Details.
+	- The nodes in the cluster with community 104 are related to Orders.
+	- The nodes in the cluster with community 121 are related to Medications.
+	- The nodes in the cluster with community 221 are related to Patient Details.
 	
 
      ```text
@@ -188,9 +188,9 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 ## Task 3: Analysis of newly formed clusters on medical records
 
 * There are 28 Nodes in the below cluster :
-* Main Table for forming a cluster is PRSNL, where the major number of tables are connected with this table.
+* Main Table for forming a cluster is PRSNL, where a significant number of tables are connected with this table.
 
-* Patient and his details, patient allergies, patient tracking and schedules, and his diagnosis details formed a cluster.
+* Patient and his details, allergies, tracking and schedules, and diagnosis details formed a cluster.
 
 * The Person will have problems, and He consults the Doctor. The Doctor will diagnose the patient. And the tracking of the patient is carried out.
 
@@ -227,7 +227,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 	CMT_CONCEPT_EXTENSION       
      ```
   
-  Below are the 18 tables which formed a cluster on Medication details and also medical dispense.
+  Below are the 18 tables that formed a cluster on Medication details and medical dispense.
 
     ```text
 	ORDER_CATALOG_ITEM_R
@@ -274,13 +274,13 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 
 ## Task 4: Adjust constraints and reform the communities of medical records
 
-1. For example, we consider the node named `ORDER_CATALOG_ITEM_R`, to move from `Medications` to `Orders` Cluster.
+1. For example, we consider the node named `ORDER_CATALOG_ITEM_R` to move from `Medications` to the `Orders` Cluster.
 
-2. Get the nodes of the target cluster(Orders) to which we want to move node `ORDER_CATALOG_ITEM_R`. And check for the edges from `ORDER_CATALOG_ITEM_R` to nodes of target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
+2. Get the nodes of the target cluster(Orders) to which we want to move node `ORDER_CATALOG_ITEM_R`. And check for the edges from `ORDER_CATALOG_ITEM_R` to nodes of the target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
 
-    NOTE: We must have an edge from the source node of the any one of the nodes of target cluster to move.
+    NOTE: We must have an edge from the source node of any one of the nodes of the target cluster to move.
 
-    Go to SQL developer using `TKDRADATA` user and execute the below query.
+    Go to SQL developer using the `TKDRADATA` user and execute the below query.
 
     ```text
    <copy>
@@ -291,9 +291,9 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
     </copy>
     ```
 
-3. Run the Infomap algorithm again on the updated data. Follow the same steps from Task 2, and verify whether the required is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
+3. Rerun the Infomap algorithm on the updated data. Follow the same steps from Task 2, and verify whether the required is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
 
-Please **proceed to the next lab** to do so.
+Please **proceed to the next lab** if you want to extract and analyze data into smaller ones.
 
 ## Acknowledgements
 

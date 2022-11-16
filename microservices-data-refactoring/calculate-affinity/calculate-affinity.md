@@ -18,7 +18,7 @@ In this lab, you will:
 This lab assumes you have the following:
 
 * An Oracle account
-* All previous labs successfully completed
+* All previous labs completed
 
 Three possible options to proceed are:
 
@@ -28,7 +28,7 @@ Three possible options to proceed are:
 
 ## Task 1: Create Graph Metadata Tables
 
-In this task, we will create a set of metadata tables that we will use to store the information we need to perform community detection in the next lab. We will create one table called `NODES` that will contain a list of all of the tables that were used in the workload capture and how many times each table was accessed and/or participated in a join. A second table called `EDGES` will be used to store the affinities between pairs of tables. Later, when we create a graph, the first table will describe the vertices, and the second table will describe the edges.
+In this task, we will create a set of metadata tables that we will use to store the information we need to perform community detection in the next lab. We will create a table called `NODES` that will contain a list of all the tables used in the workload capture and how many times each table was accessed and/or participated in a join. A second table called `EDGES` is used to store the affinities between pairs of tables. Later, when we create a graph, the first table will describe the vertices, and the second table will define the edges.
 
 1. Create the graph metadata tables by running the following statements - make sure you run these in your `TKDRADATA` SQL Worksheet (not the `ADMIN` user's worksheet):
 
@@ -316,7 +316,7 @@ Skip Task 1, Task 2 and Run the Task 3 instructions if you don't have the STS/do
     * microservices-data-refactoring/livelabs/resources/NODES.csv - Where we have table names.
     * microservices-data-refactoring/livelabs/resources/EDGES.csv - Where we have source(TABLE1) and destination(TABLE2) columns with the edge weights(TOTAL_AFFINITY) column.
 
-2. Go to the compartment which we have created during the setup. In our case, the compartment name is `dra`. Click on the `dradb` which was also created during the setup.
+2. Go to the compartment which we have created during the setup. In our case, the compartment name is `dra`. Click on the `dradb`, which was also created during the setup.
 
      ![After login into OCI](./images/compartment-and-adb.png " ")
 
@@ -326,7 +326,7 @@ Skip Task 1, Task 2 and Run the Task 3 instructions if you don't have the STS/do
 
 4. Make sure you run these in your `TKDRADATA` SQL Worksheet (not the `ADMIN` user's worksheet). If you do not recall how to navigate to SQL Worksheet, please refer back to Lab 2, Task 2, Step 1 for a reminder.
 
-    In the 'Data Tools' Section, Click on 'Data load'. You will see the below screen.
+    Click on 'Data Tools' in the 'Data load' section. You will see the below screen.
 
      ![Data Load to upload your own data](./images/data-tools-data-load.png " ")
 
@@ -340,7 +340,7 @@ Skip Task 1, Task 2 and Run the Task 3 instructions if you don't have the STS/do
 
 5. Verify whether the data is loaded into the Database successfully.
 
-    Two tables, NODES, and EDGES should be created. Where the NODES table with 974 rows and the EDGES table with 3499 rows.
+    Two tables, NODES, and EDGES should be created. The NODES table with 974 rows and the EDGES table with 3499 rows.
     ```text
     <copy>
     SELECT COUNT(1) FROM NODES;
@@ -360,7 +360,7 @@ Skip Task 1, Task 2 and Run the Task 3 instructions if you don't have the STS/do
     </copy>
     ```
 
-Once this has been completed, you are ready to **proceed to the next lab.**
+Once completed, you are ready to **proceed to the next lab.**
 
 ## Acknowledgements
 
