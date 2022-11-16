@@ -12,12 +12,12 @@ Estimated Time: 30 minutes
 ### Prerequisites
 
 This lab assumes you have the following:
-- All previous labs were completed successfully except Lab 5.
+- Lab 1 to Lab 4, and Lab 6 should be completed successfully.
 
 
 ## Task 1: Choose the clusters from the result of Infomap from the main graph
 
-These are a few of the clusters which formed after running community detection on the main graph we have created in Lab 4. We take the nodes from these clusters and the connected edges to these nodes and dump the data to newly created tables.
+These are a few of the clusters which formed after running community detection on the main graph we have created in Lab 6. We take the nodes from these clusters and the connected edges to these nodes and dump the data to newly created tables.
 
 1. Below are the tables from the cluster related to the Personal Details of the Patient. Look into the below tables in the output and check all the tables from the Patient related cluster. These tables will have the same community id in the output of Infomap. No action is required here. 
 

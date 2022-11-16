@@ -109,37 +109,174 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 
     ```text
    name=Environment Creation - 18 GBstype= ENVIRONMENT_CREATION created_by= ADMIN
-   Graph : PgxGraph[name=MED_REC_PG_OBJ_259_G, N=259, E=972, created=1664544333468]
+   Graph : PgxGraph[name=MED_REC_PG_OBJ_974_G, N=974, E=3499, created=1664544333468]
    ```
 
-    The output of Infomap will have the Community Ids with the nodes in that community, as shown below
+    The output of Infomap will have the Community Ids with the nodes in that community. Each and every node will fall under one or the other cluster. Out of 974 nodes, just for understanding shown the clusters related to Patient Details, Medications and Orders. The complete output can be seen in the file `dra-output-medical-records-974-nodes.txt`
 
-    ```text
-    +----------------------------------------+
-    | Community | TABLE_NAME                 |
-    +----------------------------------------+
-    | 0         | PRSNL_RELTN_ACTIVITY       |
-    | 0         | CLINICAL_SERVICE_RELTN     |
-    | 0         | ENCNTR_PRSNL_RELTN         |
-    | 0         | PE_STATUS_REASON           |
-    | 0         | PCT_CARE_TEAM              |
-    | 0         | PERSON_PERSON_RELTN        |
-    | 0         | PERSON_INFO                |
-    | 0         | DEPT_ORD_STAT_SECURITY     |
-    | 0         | PERSON_PRSNL_RELTN         |
-    | 0         | PRSNL_ORG_RELTN            |
-    ------------------------------------------
+	- The nodes in cluster with community 104 is related to Orders.
+	- The nodes in cluster with community 121 is related to Medications.
+	- The nodes in cluster with community 221 is related to Patient Details.
+	
+
+     ```text
+	+--------------------------------------------+
+    | Community | TABLE_NAME                     |
+	+--------------------------------------------+
+	| 121       | ORDER_CATALOG_ITEM_R           |
+	| 121       | WARNING_LABEL                  |
+	| 121       | WARNING_LABEL_XREF             |
+	| 121       | MED_OE_DEFAULTS                |
+	| 121       | PACKAGE_TYPE                   |
+	| 121       | MED_PACKAGE_TYPE               |
+	| 121       | QUANTITY_ON_HAND               |
+	| 121       | MED_IDENTIFIER                 |
+	| 121       | MED_INGRED_SET                 |
+	| 121       | MEDICATION_DEFINITION          |
+	| 121       | MED_PRODUCT                    |
+	| 121       | MED_COST_HX                    |
+	| 121       | MANUFACTURER_ITEM              |
+	| 121       | MED_FLEX_OBJECT_IDX            |
+	| 121       | MED_DISPENSE                   |
+	| 121       | ITEM_LOCATION_COST             |
+	| 121       | MED_DEF_FLEX                   |
+	| 121       | RX_CURVE                       |
+	| 204       | ACTIVITY_DATA_RELTN            |
+	| 204       | SCH_APPT_ORD                   |
+	| 204       | ORDER_CATALOG_SYNONYM          |
+	| 204       | RENEW_NOTIFICATION_PERIOD      |
+	| 204       | RAD_FOLLOW_UP_RECALL           |
+	| 204       | ORDER_NOTIFICATION             |
+	| 204       | FILM_USAGE                     |
+	| 204       | RAD_PROCEDURE_ASSOC            |
+	| 204       | ORDER_ACTION                   |
+	| 204       | RAD_PRIOR_PREFS                |
+	| 204       | ORDER_REVIEW                   |
+	| 204       | ORDER_IV_INFO                  |
+	| 204       | ORDERS                         |
+	| 204       | ECO_QUEUE                      |
+	| 204       | BILL_ONLY_PROC_RELTN           |
+	| 204       | ORDER_CATALOG                  |
+	| 204       | ORDER_INGREDIENT               |
+	| 221       | PROC_PRSNL_RELTN               |
+	| 221       | PSN_PPR_RELTN                  |
+	| 221       | CODE_VALUE_EXTENSION           |
+	| 221       | PERSON_PRSNL_RELTN             |
+	| 221       | DEPT_ORD_STAT_SECURITY         |
+	| 221       | ENCNTR_PRSNL_RELTN             |
+	| 221       | PROBLEM_COMMENT                |
+	| 221       | PRSNL_RELTN_ACTIVITY           |
+	| 221       | DOSE_CALCULATOR_UOM            |
+	| 221       | PERSON_CODE_VALUE_R            |
+	| 221       | CLINICAL_SERVICE_RELTN         |
+	| 221       | CMT_CONCEPT                    |
+	| 221       | CODE_CDF_EXT                   |
+	| 221       | CREDENTIAL                     |
+	| 221       | PE_STATUS_REASON               |
+	| 221       | PRSNL_RELTN                    |
+	| 221       | CMT_CONCEPT_EXTENSION          |
+	| 221       | PRSNL                          |
+	| 221       | MATCH_TAG_PARMS                |
+	| 221       | FILL_CYCLE_BATCH               |
+	| 221       | CODE_VALUE_SET                 |
+	| 221       | PRSNL_ORG_RELTN                |
+	| 221       | SCH_LOCK                       |
+	| 221       | TRACKING_EVENT_HISTORY         |
+	+--------------------------------------------+
      ```
-
-    Here we have shown only for first ten nodes for reference. Similarly, we will have communities detected for all 974 nodes. Detailed analysis is done on the smaller graph in the next lab.
 
 ## Task 3: Analysis of newly formed clusters on medical records
 
+* There are 28 Nodes in the below cluster :
+* Main Table for forming a cluster is PRSNL, where the major number of tables are connected with this table.
+
+* Patient and his details, patient allergies, patient tracking and schedules, and his diagnosis details formed a cluster.
+
+* The Person will have problems, and He consults the Doctor. The Doctor will diagnose the patient. And the tracking of the patient is carried out.
+
+  If you see, the below tables are related to a Person who is a patient. Here the Person, his Diagnosis, Tracking the activity of the Person has formed one community. Similarly, there are other communities formed as well.
+    
+     ```text
+	ESO_TRIGGER
+	PRSNL_ORG_RELTN
+	PROBLEM_COMMENT
+	MATCH_TAG_PARMS
+	CODE_CDF_EXT
+	CREDENTIAL
+	FILL_CYCLE_BATCH
+	DEPT_ORD_STAT_SECURITY
+	WORKING_VIEW_FREQ_INTERVAL
+	PRSNL_RELTN
+	PE_STATUS_REASON
+	PERSON_CODE_VALUE_R
+	CMT_CONCEPT
+	SCH_LOCK
+	PROC_PRSNL_RELTN
+	TRACKING_EVENT_HISTORY
+	CODE_VALUE_SET
+	PERSON_PRSNL_RELTN
+	DOSE_CALCULATOR_UOM
+	CLINICAL_SERVICE_RELTN
+	ENCNTR_PRSNL_RELTN
+	PREDEFINED_PREFS
+	PSN_PPR_RELTN
+	CODE_VALUE_EXTENSION
+	PRSNL
+	CODE_VALUE
+	PRSNL_RELTN_ACTIVITY
+	CMT_CONCEPT_EXTENSION       
+     ```
+  
+  Below are the 18 tables which formed a cluster on Medication details and also medical dispense.
+
+    ```text
+	ORDER_CATALOG_ITEM_R
+	WARNING_LABEL_XREF
+	PACKAGE_TYPE
+	MED_IDENTIFIER
+	MED_PACKAGE_TYPE
+	MED_PRODUCT
+	MANUFACTURER_ITEM
+	WARNING_LABEL
+	MED_FLEX_OBJECT_IDX
+	MED_DEF_FLEX
+	ITEM_LOCATION_COST
+	QUANTITY_ON_HAND
+	MED_DISPENSE
+	MEDICATION_DEFINITION
+	MED_COST_HX
+	MED_INGRED_SET
+	MED_OE_DEFAULTS
+	RX_CURVE      
+     ```
+
+	Below are the 17 tables which formed a cluster based on Orders and Billing related information.
+	
+	```text
+	RENEW_NOTIFICATION_PERIOD
+	ORDER_REVIEW
+	BILL_ONLY_PROC_RELTN
+	FILM_USAGE
+	ORDER_CATALOG_SYNONYM
+	ORDERS
+	ORDER_INGREDIENT
+	ORDER_CATALOG
+	SCH_APPT_ORD
+	ORDER_ACTION
+	ORDER_IV_INFO
+	RAD_PROCEDURE_ASSOC
+	ORDER_NOTIFICATION
+	RAD_PRIOR_PREFS
+	RAD_FOLLOW_UP_RECALL
+	ACTIVITY_DATA_RELTN
+	ECO_QUEUE
+	```
+
 ## Task 4: Adjust constraints and reform the communities of medical records
 
-1. For example, we consider the node named `RAD_REPORT_DETAIL`, want to move from cluster 3 to cluster 2.
+1. For example, we consider the node named `ORDER_CATALOG_ITEM_R`, to move from `Medications` to `Orders` Cluster.
 
-2. Get the nodes of the target cluster to which we want to move node `RAD_REPORT_DETAIL`. And check for the edges from `RAD_REPORT_DETAIL` to nodes of target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
+2. Get the nodes of the target cluster(Orders) to which we want to move node `ORDER_CATALOG_ITEM_R`. And check for the edges from `ORDER_CATALOG_ITEM_R` to nodes of target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
 
     NOTE: We must have an edge from the source node to nodes of the target cluster.
 
@@ -149,8 +286,8 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    <copy>
    UPDATE EDGES SET TOTAL_AFFINITY = 1 WHERE TABLE_MAP_ID IN 
    (SELECT DISTINCT(TABLE_MAP_ID) AS MATCHED_IDS_OF_EDGES_TO_BE_UPDATED FROM EDGES
-   OR (TABLE2 = 'RAD_REPORT_DETAIL' AND TABLE1 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER})))
-   WHERE (TABLE1 = 'RAD_REPORT_DETAIL' AND TABLE2 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER}));
+   OR (TABLE2 = 'ORDER_CATALOG_ITEM_R' AND TABLE1 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER})))
+   WHERE (TABLE1 = 'ORDER_CATALOG_ITEM_R' AND TABLE2 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER}));
     </copy>
     ```
 
