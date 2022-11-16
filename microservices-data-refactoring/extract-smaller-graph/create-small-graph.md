@@ -2,20 +2,18 @@
 
 ## Introduction
 
-This lab is optional. In this lab, we will run the community detection algorithm on the main graph and identifies the clusters. The smaller graph is extracted using these clusters by choosing only a few clusters to shorten the data. We create the tables with nodes and edges only for these data for further analysis to identify clusters using the Infomap algorithm. The use of a small graph helps us understand the communities detected.
+This lab is optional. We should be doing this lab only if we have have uploaded the medical records in Lab 3, Task 3. In this lab, we consider the few clusters which are identified when you run the Lab 6 using community detection. We further create the tables with nodes and edges with this newly extarcted data for further analysis to identify clusters using the Infomap algorithm. The use of a small graph helps us understand the detected communities better.
 
 Estimated Time: 30 minutes
 
 ### Objectives
-- Run the community detection algorithm to detect communities.
-- Extract the smaller graph from the original one as the analysis will be easier and easy to understand.
-- Create the CSV files for Nodes and Edges for the smaller graphs.
+- Extract the smaller graph from the main graph as the analysis will be easier and easy to understand.
 
 ### Prerequisites
 
 This lab assumes you have the following:
-- An Oracle account
-- This lab requires an Autonomous Database - Shared Infrastructure or Autonomous Transaction Processing - Shared Infrastructure account.
+- All previous labs were completed successfully except Lab 5.
+
 
 ## Task 1: Choose the clusters from the result of Infomap from the main graph
 
@@ -118,7 +116,19 @@ This task is not required if you have followed through with Task 1 to Task 5.
 - `microservices-data-refactoring/livelabs/resources/NODES_259_NEW.csv` - Where we have table names.
 - `microservices-data-refactoring/livelabs/resources/EDGES_259_NEW.csv` - Where we have source(TABLE1) and destination(TABLE2) columns with the edge
 
-2. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
+2. Adding primary and foreign key constraints for the newly created tables `NODES_259_NEW` and `EDGES_259_NEW` by running the following SQL.
+
+    ```text
+    <copy>
+    ALTER TABLE NODES_259_NEW ADD PRIMARY KEY (TABLE_NAME);
+    ALTER TABLE EDGES_259_NEW ADD PRIMARY KEY (TABLE_MAP_ID);
+    ALTER TABLE EDGES_259_NEW MODIFY TABLE1 REFERENCES NODES_259_NEW (TABLE_NAME);
+    ALTER TABLE EDGES_259_NEW MODIFY TABLE2 REFERENCES NODES_259_NEW (TABLE_NAME);
+    commit;
+    </copy>
+    ```
+	
+3. Create the graph using node table `NODES_259_NEW` and edge table `EDGES_259_NEW`. Follow the steps from Lab 4, Task 2, to create a graph. The only difference here is to select the tables `NODES_259_NEW` and `EDGES_259_NEW`.
 
 Once this has been completed, you are ready to **proceed to the next lab**.
 

@@ -17,7 +17,7 @@ In this lab, you will:
 
 This lab assumes you have the following:
 
-* You are running on Java 10+ in OCI Console. 
+* You are running on Java 10+ in OCI Console.
 * All previous labs were completed successfully.
 
 ## Task 1: Change the graph properties
@@ -31,27 +31,54 @@ This lab assumes you have the following:
    ```
 
 2. Navigate to the project
+
     ```text
    <copy>
     cd ${HOME}/microservices-data-refactoring/dra-graph-client
    </copy>
    ```
 
-3. Update the property `graph_name` of a newly created graph on smaller data in the src/main/resources/graph-config.properties file.
+3. Update the src/main/resources/db-config.properties file.
+
+    ```text
+   <copy>
+    vi src/main/resources/db-config.properties
+   </copy>
+   ```
+
+   Update the value for the below properties.
+
+    ```text
+    tenant   - tenant OCID
+    database - Name of the Database
+    username - Username to login into the database
+    password - Password to login into the database
+    endpoint - Endpoint for connecting to Autonomous Database instance
+    ```
+
+   Save and exit.
+
+4. Update the src/main/resources/graph-config.properties file.
 
     ```text
    <copy>
     vi src/main/resources/graph-config.properties
    </copy>
    ```
+
     Update the value for the below properties.
 
     ```text
-    graph_name : Name of the graph created in Graph Studio.
+    graph_name: Name of the graph created in Graph Studio.
+    vertex_property_column: Column name of Tables
+    edge_property_source_column: Source Column name of the Edge
+    edge_property_destination_column: Destination Column name of the Edge
+    edge_property_weight_column: Column name of Edge weight
 
     ```
+
     Save and exit.
-	
+
 ## Task 2: Compile and Run the Community Detection on medical records
 
 Here, We are using the smaller graph created in Lab 5. You can also run on the main graph, which is created in Lab 3, or any data which you loaded through SQL Tuning Sets.
@@ -63,7 +90,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
     mvn compile
    </copy>
    ```
-   
+
 2. Execute the project to see the identified clusters using the Infomap Algorithm
 
     ```text
@@ -79,12 +106,13 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    Output
 
    Job Details:
+
     ```text
    name=Environment Creation - 18 GBstype= ENVIRONMENT_CREATION created_by= ADMIN
    Graph : PgxGraph[name=MED_REC_PG_OBJ_259_G, N=259, E=972, created=1664544333468]
    ```
 
-    	The output of Infomap will have the Community Ids with the nodes in that community, as shown below
+    The output of Infomap will have the Community Ids with the nodes in that community, as shown below
 
     ```text
     +----------------------------------------+
@@ -104,7 +132,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
      ```
 
     Here we have shown only for first ten nodes for reference. Similarly, we will have communities detected for all 974 nodes. Detailed analysis is done on the smaller graph in the next lab.
-	
+
 ## Task 3: Analysis of newly formed clusters on medical records
 
 ## Task 4: Adjust constraints and reform the communities of medical records
@@ -119,15 +147,15 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 
     ```text
    <copy>
-   UPDATE MED_RECS_AD_TABLE_MAP SET TOTAL_AFFINITY = 1 WHERE TABLE_MAP_ID IN 
-   (SELECT DISTINCT(TABLE_MAP_ID) AS MATCHED_IDS_OF_EDGES_TO_BE_UPDATED FROM MED_RECS_AD_TABLE_MAP
+   UPDATE EDGES SET TOTAL_AFFINITY = 1 WHERE TABLE_MAP_ID IN 
+   (SELECT DISTINCT(TABLE_MAP_ID) AS MATCHED_IDS_OF_EDGES_TO_BE_UPDATED FROM EDGES
    OR (TABLE2 = 'RAD_REPORT_DETAIL' AND TABLE1 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER})))
    WHERE (TABLE1 = 'RAD_REPORT_DETAIL' AND TABLE2 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER}));
     </copy>
     ```
 
 3. Run the Infomap algorithm again on the updated data. Follow the same steps from Lab 6, Task 2, and verify whether the required is moved to the intended clusters.
-	
+
 Please **proceed to the next lab** to do so.
 
 ## Acknowledgements
