@@ -1,4 +1,4 @@
-# Run the community detection algorithm
+# Run the community detection algorithm on medical records
 
 ## Introduction
 
@@ -278,20 +278,20 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 
 2. Get the nodes of the target cluster(Orders) to which we want to move node `ORDER_CATALOG_ITEM_R`. And check for the edges from `ORDER_CATALOG_ITEM_R` to nodes of target cluster and update the `TOTAL_AFFINITY` of those edges to 1.
 
-    NOTE: We must have an edge from the source node to nodes of the target cluster.
+    NOTE: We must have an edge from the source node of the any one of the nodes of target cluster to move.
 
-    Go to SQL developer and execute the below query.
+    Go to SQL developer using `TKDRADATA` user and execute the below query.
 
     ```text
    <copy>
-   UPDATE EDGES SET TOTAL_AFFINITY = 1 WHERE TABLE_MAP_ID IN 
-   (SELECT DISTINCT(TABLE_MAP_ID) AS MATCHED_IDS_OF_EDGES_TO_BE_UPDATED FROM EDGES
-   OR (TABLE2 = 'ORDER_CATALOG_ITEM_R' AND TABLE1 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER})))
-   WHERE (TABLE1 = 'ORDER_CATALOG_ITEM_R' AND TABLE2 IN (#{COMMA_SEPARATED_NODES_OF_TARGET_CLUSTER}));
+	UPDATE EDGES SET TOTAL_AFFINITY = 1 WHERE TABLE_MAP_ID IN 
+	(SELECT DISTINCT(TABLE_MAP_ID) FROM EDGES
+	WHERE (TABLE2 = 'ORDER_CATALOG_ITEM_R' AND TABLE1 IN ('RENEW_NOTIFICATION_PERIOD','ORDER_REVIEW','BILL_ONLY_PROC_RELTN','FILM_USAGE','ORDER_CATALOG_SYNONYM','ORDERS','ORDER_INGREDIENT','ORDER_CATALOG','SCH_APPT_ORD','ORDER_ACTION','ORDER_IV_INFO','RAD_PROCEDURE_ASSOC','ORDER_NOTIFICATION','RAD_PRIOR_PREFS','RAD_FOLLOW_UP_RECALL','ACTIVITY_DATA_RELTN','ECO_QUEUE'))
+	OR (TABLE1 = 'ORDER_CATALOG_ITEM_R' AND TABLE2 IN ('RENEW_NOTIFICATION_PERIOD','ORDER_REVIEW','BILL_ONLY_PROC_RELTN','FILM_USAGE','ORDER_CATALOG_SYNONYM','ORDERS','ORDER_INGREDIENT','ORDER_CATALOG','SCH_APPT_ORD','ORDER_ACTION','ORDER_IV_INFO','RAD_PROCEDURE_ASSOC','ORDER_NOTIFICATION','RAD_PRIOR_PREFS','RAD_FOLLOW_UP_RECALL','ACTIVITY_DATA_RELTN','ECO_QUEUE')));
     </copy>
     ```
 
-3. Run the Infomap algorithm again on the updated data. Follow the same steps from Lab 6, Task 2, and verify whether the required is moved to the intended clusters.
+3. Run the Infomap algorithm again on the updated data. Follow the same steps from Task 2, and verify whether the required is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
 
 Please **proceed to the next lab** to do so.
 
