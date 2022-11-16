@@ -2,7 +2,7 @@
 
 ## Introduction
 
-In this lab, we run the community detection algorithm on the graphs created in the previous labs, which identifies the communities within the graphs. The community detection algorithm takes the input graphs, identifies strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
+Go through this lab only if you want to run community detection on the medical records data which is loaded in Lab 3, Task 3. In this lab, we run the community detection algorithm on the graphs created in the previous labs, which identifies the communities within the graphs. The community detection algorithm takes the input graphs, identifies strong connectivity within graphs, and forms multiple smaller communities. Infomap is used for community detection in this lab.
 
 Estimated Time: 10 minutes
 
