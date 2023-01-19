@@ -50,26 +50,13 @@ This lab assumes you have the following:
 
     ```text
     tenant   - tenant OCID
-	cloud_db_ocid - Cloud Database OCID
-    database - Name of the Database(Here it is 'dradb')
-    username - Username to login into the database(Here it is 'TKDRADATA')
-    password - Password to login into the database for the above username.
-    endpoint - Endpoint for connecting to Autonomous Database instance (Ex: https://<hostname-prefix>.adb.<region>.oraclecloudapps.com/)
+    database - Name of the Database
+    username - Username to login into the database
+    password - Password to login into the database
+    endpoint - Endpoint for connecting to Autonomous Database instance
     ```
 
-	Copy the value for `cloud_db_ocid` as shown in the Autonomous Database Details Screen.
-
-    ![Cloud Database OCID in Autonomous Database Details Screen](./images/cloud-db-ocid.png " ")
-	
-	You can also get the value of `endpoint` as shown below. From the Oracle Cloud Console, choose the Autonomous Database instance(`dradb`), then Click the **Tools** tab on the details page menu below. 
-
-   ![Oracle Cloud Console](./images/adw-console-tools-tab1.png)  
-   
-   Click on **Open Graph Studio**. You will see the below login screen. Copy the URL till `oraclecloudapps.com` 
-   
-   ![Oracle Cloud Console](./images/endpoint-address.png)
-	
-   Save and exit(:wq) from the `db-config.properties` file.
+   Save and exit.
 
 4. Update the src/main/resources/graph-config.properties file.
 
@@ -79,7 +66,7 @@ This lab assumes you have the following:
    </copy>
    ```
 
-    Update the value for the below properties. No update is required if you have followed the same steps and specified the graph name during the creation of the graph in Lab 4.
+    Update the value for the below properties.
 
     ```text
     graph_name: Name of the graph created in Graph Studio.
@@ -90,7 +77,7 @@ This lab assumes you have the following:
 
     ```
 
-    Save and exit(:wq) from the `graph-config.properties` file.
+    Save and exit.
 
 ## Task 2: Compile and Run the Community Detection
 
@@ -104,7 +91,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    </copy>
    ```
 
-2. Execute the project to see the identified clusters using the Infomap algorithm
+2. Execute the project to see the identified clusters using the Infomap Algorithm
 
     ```text
    <copy>
@@ -113,7 +100,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
    ```
 
    Where
-   * com.oracle.ms.app.InfomapGraphClient - The main class loads the graph and runs the Infomap to identify the Clusters.
+   * com.oracle.ms.app.InfomapGraphClient - The main class which loads the graph and runs the Infomap to identify the Clusters.
    * 5 is MaxNumberOfIterations for Infomap Algorithm. You can change it to any positive integer.
 
    Output
@@ -122,7 +109,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
 
     ```text
    name=Environment Creation - 18 GBstype= ENVIRONMENT_CREATION created_by= ADMIN
-   Graph : PgxGraph[name=DRA_MEDICAL_RECS_G, N=98, E=1582, created=1664544333468]
+   Graph : PgxGraph[name=DRA_SIMULATED_DATA_G, N=98, E=1582, created=1664544333468]
    ```
 
     The table names with the same community Ids formed the clusters below.
@@ -250,7 +237,7 @@ Here, We are using the smaller graph created in Lab 5. You can also run on the m
     </copy>
     ```
 
-3. Rerun the Infomap algorithm on the updated data. Follow the same steps from Task 2, and verify whether the required node is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
+3. Run the Infomap algorithm again on the updated data. Follow the same steps from Task 2, and verify whether the required node is moved to the intended clusters. Iterate the process until you are convinced with the final clusters.
 
 Please **proceed to the next lab** to do so.
 

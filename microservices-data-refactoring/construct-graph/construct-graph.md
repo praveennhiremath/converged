@@ -25,7 +25,7 @@ This lab assumes you have the following:
 
     Log in to the Oracle Cloud Console, choose the Autonomous Database instance, then Click the **Tools** tab on the details page menu on the left.
 
-   ![Oracle Cloud Console](./images/adw-console-tools-tab1.png)
+   ![Oracle Cloud Console](./images/adw-console-tools-tab.png)
 
 2. Click the **Open Graph Studio** card to open a new page or tab in your browser.
 
@@ -45,16 +45,16 @@ This lab assumes you have the following:
    Then click **Create**.  
    ![Model Create Button](images/modeler-create-button1.png " ")  
 
-   >**Note: If you click the `Start Modeling` button instead, you'll see the screen shown in the next step.**
+   >**Note: If you click on the `Start Modeling` button instead, you'll see the screen shown in the next step.**
 
 2. Then select the `NODES` and `EDGES` tables.
    ![Select tables to create graph](./images/select-tables1.png " ")
 
 3. Move them to the right i,e., click the first icon on the shuttle control.
 
-   ![Selected tables for graph creation](./images/selected-tables2.png " ")
+   ![Selected tables for graph creation](./images/selected-tables1.png " ")
 
-   Select Graph Type as `PG View` and Click **Next** to get a suggested model. We will edit and update this model to add an edge and a vertex label.  
+   Select Graph Type as `PG Objects` and Click **Next** to get a suggested model. We will edit and update this model to add an edge and a vertex label.  
 
    The suggested model has the `NODES` as a vertex table since foreign key constraints are specified on `EDGES` that reference it.
 

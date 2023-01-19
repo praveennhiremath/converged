@@ -117,10 +117,10 @@ Now we will create some simulated application workload. In a real-world scenario
 --Printing the sql statements for cluster 5...
 select *from tkdradata.dra_95, tkdradata.dra_90, tkdradata.dra_98;
 select* from tkdradata.dra_81, tkdradata.dra_93, tkdradata.dra_94, tkdradata.dra_97;
-select *from tkdradata.dra_82, tkdradata.dra_84, tkdradata.dra_81, tkdradata.dra_100, tkdradata.dra_86, tkdradata.dra_93, tkdradata.dra_88, tkdradata.dra_1;
+select *from tkdradata.dra_82, tkdradata.dra_84, tkdradata.dra_81, tkdradata.dra_100, tkdradata.dra_86, tkdradata.dra_93, tkdradata.dra_88;
 select* from tkdradata.dra_96, tkdradata.dra_93, tkdradata.dra_88, tkdradata.dra_97;
 select *from tkdradata.dra_96, tkdradata.dra_88, tkdradata.dra_84, tkdradata.dra_82, tkdradata.dra_92, tkdradata.dra_93, tkdradata.dra_97, tkdradata.dra_99;
-select* from tkdradata.dra_83, tkdradata.dra_92, tkdradata.dra_100, tkdradata.dra_93, tkdradata.dra_88, tkdradata.dra_87, tkdradata.dra_98, tkdradata.dra_1;
+select* from tkdradata.dra_83, tkdradata.dra_92, tkdradata.dra_100, tkdradata.dra_93, tkdradata.dra_88, tkdradata.dra_87, tkdradata.dra_98;
 select *from tkdradata.dra_89, tkdradata.dra_83, tkdradata.dra_86, tkdradata.dra_93, tkdradata.dra_99, tkdradata.dra_81;
 select* from tkdradata.dra_96, tkdradata.dra_85, tkdradata.dra_97, tkdradata.dra_86, tkdradata.dra_100, tkdradata.dra_83, tkdradata.dra_93, tkdradata.dra_80;
 select *from tkdradata.dra_94, tkdradata.dra_90, tkdradata.dra_93, tkdradata.dra_91, tkdradata.dra_96, tkdradata.dra_83, tkdradata.dra_88, tkdradata.dra_84, tkdradata.dra_85;
